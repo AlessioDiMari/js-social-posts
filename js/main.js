@@ -113,9 +113,22 @@ posts.forEach(function (actualPost) {
 
     actualLikedPost.addEventListener("click", function(e) {
 
-        console.log(e);
+        // Prenvengo il comportamento di default dell'"a" al click
         e.preventDefault();
-        
+
+        // Verifico se ho già messo like ad un post
+        if( ! likedPosts.includes(actualPost.id)) {
+            // inserisco l'id del post nell'array dei post piaciuti
+            likedPosts.push(actualPost.id);
+            // aggiungo una classe che cambierà il colore del tasto "mi piace"
+            actualLikedPost.classList.add("like-button--liked");
+
+            // aumento il numero di like in pagina
+            actualPost.likes ++;
+            const actualLikeCounter = document.querySelector(`#like-counter-${actualPost.id}`);
+            actualLikeCounter.innerText = actualPost.likes;
+        }
+        console.log(likedPosts)
         
     } )
 
