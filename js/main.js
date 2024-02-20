@@ -57,6 +57,10 @@ const posts = [
 ];
 
 
+// Memorizzo l'id dei post piaciuti in un array
+const likedPosts = [];
+
+
 
 const containerElement = document.getElementById("container");
 
@@ -64,38 +68,56 @@ const containerElement = document.getElementById("container");
 // Creo un forEach per visualizzare ogni post
 posts.forEach(function (actualPost) {
 
-    containerElement.innerHTML += `
-    <div class="post">
-        <div class="post__header">
-            <div class="post-meta">                    
-                <div class="post-meta__icon">
-                    <img class="profile-pic" src="${actualPost.author.image}" alt="${actualPost.author.name}">                    
-                </div>
-                <div class="post-meta__data">
-                    <div class="post-meta__author">${actualPost.author.name}</div>
-                    <div class="post-meta__time">${actualPost.created}</div>
-                </div>                    
-            </div>
-        </div>
-        <div class="post__text">${actualPost.content}</div>
-        <div class="post__image">
-            <img src="${actualPost.media}" alt="">
-        </div>
-        <div class="post__footer">
-            <div class="likes js-likes">
-                <div class="likes__cta">
-                    <a class="like-button  js-like-button" href="#" data-postid="1">
-                        <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
-                        <span class="like-button__label">Mi Piace</span>
-                    </a>
-                </div>
-                <div class="likes__counter">
-                    Piace a <b id="like-counter-1" class="js-likes-counter">${actualPost.likes}</b> persone
-                </div>
-            </div> 
-        </div>            
-    </div>
 
-    `
+    const newPost = document.createElement("div");
+
+
+    newPost.innerHTML = `
+    <div class="post__header">
+        <div class="post-meta">                    
+            <div class="post-meta__icon">
+                <img class="profile-pic" src="${actualPost.author.image}" alt="${actualPost.author.name}">                    
+            </div>
+            <div class="post-meta__data">
+                <div class="post-meta__author">${actualPost.author.name}</div>
+                <div class="post-meta__time">${actualPost.created}</div>
+            </div>                    
+        </div>
+    </div>
+    <div class="post__text">${actualPost.content}</div>
+    <div class="post__image">
+        <img src="${actualPost.media}" alt="">
+    </div>
+    <div class="post__footer">
+        <div class="likes js-likes">
+            <div class="likes__cta">
+                <a class="like-button  js-like-button" href="#" data-postid="${actualPost.id}">
+                    <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
+                    <span class="like-button__label">Mi Piace</span>
+                </a>
+            </div>
+            <div class="likes__counter">
+                Piace a <b id="like-counter-${actualPost.id}" class="js-likes-counter">${actualPost.likes}</b> persone
+            </div>
+        </div> 
+    </div>            
+    `;
+
+    newPost.className = "post";
+
+    containerElement.append(newPost);
+
+
+
+    const actualLikedPost = document.querySelector(`a[data-postid="${actualPost.id}"]`)
+
+    actualLikedPost.addEventListener("click", function(e) {
+
+        console.log(e);
+        e.preventDefault();
+        
+        
+    } )
+
 
 })
